@@ -5,9 +5,11 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
 
-
-    // Start is called before the first frame update
     public Player player;
+    public float timer;
+    public int waitingTime;
+    // Start is called before the first frame update
+   
     void Start()
     {
         gameObject.SetActive(false);
@@ -17,22 +19,24 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        StartCoroutine(Shoot());
+        timer += Time.deltaTime;
+        if(timer > waitingTime)
+        {
+            Shoot();
+            timer = 0;
+        }
+       
     }
     void OnMouseDown()
     {
-        gameObject.SetActive(false);
+        if(!player.gameOver)
+            gameObject.SetActive(false);
     }
+    
 
-    IEnumerator Shoot()
+    void Shoot()
     {
-       
-
-        while (!player.gameOver)
-        {
-            yield return new WaitForSeconds(10);
+        if (player.health > 0)
             player.health = player.health - 1;
-        }
     }
 }

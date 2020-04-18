@@ -6,15 +6,17 @@ public class Spawner : MonoBehaviour
 {
     // Start is called before the first frame update
     public GameObject[] doors;
+    
     public float spawnWait;
     public float minSpawnWait;
     public float maxSpawnWait;
     public float startWait;
     public Player player;
-
+    int doorNumber;
 
     void Start()
     {
+        
         StartCoroutine(randomSpawn());
     }
 
@@ -31,8 +33,11 @@ public class Spawner : MonoBehaviour
 
         while (!player.gameOver)
         {
-            doors[Random.Range(0, 6)].SetActive(true);
+            doorNumber = Random.Range(0, 6);
+            doors[doorNumber].SetActive(true);
+            
             yield return new WaitForSeconds(spawnWait);
         }
     }
+
 }
